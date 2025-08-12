@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoFilm Sort: Lights, Camera, Recycle!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="screen active">
+        <div class="cinema-header">
+            <div class="film-strip"></div>
+            <h1 class="title">🎬 EcoFilm Sort</h1>
+            <h2 class="subtitle">Lights, Camera, Recycle!</h2>
+            <div class="film-strip"></div>
+        </div>
+        
+        <div class="welcome-content">
+            <div class="popcorn-container">
+                <p class="intro-text">Welcome to the most entertaining recycling game in cinema history! Help our film characters sort waste properly and save the environment.</p>
+                
+                <div class="character-preview">
+                    <div class="character-card">
+                        <div class="character-icon">🤖</div>
+                        <span>Eco-E</span>
+                    </div>
+                    <div class="character-card">
+                        <div class="character-icon">🌳</div>
+                        <span>Tree Guardian</span>
+                    </div>
+                    <div class="character-card">
+                        <div class="character-icon">🐠</div>
+                        <span>Ocean Hero</span>
+                    </div>
+                    <div class="character-card">
+                        <div class="character-icon">🍃</div>
+                        <span>Nature Protector</span>
+                    </div>
+                </div>
+                
+                <button id="start-game-btn" class="btn btn--primary btn--lg">🎬 Start Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions Screen -->
+    <div id="instructions-screen" class="screen hidden">
+        <div class="screen-header">
+            <h2>🎯 How to Play</h2>
+        </div>
+        
+        <div class="instructions-content">
+            <div class="instruction-step">
+                <div class="step-number">1</div>
+                <p>Drag waste items to the correct disposal bins</p>
+            </div>
+            
+            <div class="instruction-step">
+                <div class="step-number">2</div>
+                <p>Get guidance from our film character helpers</p>
+            </div>
+            
+            <div class="instruction-step">
+                <div class="step-number">3</div>
+                <p>Learn environmental facts with each sort</p>
+            </div>
+            
+            <div class="bins-preview">
+                <div class="bin-preview" data-type="recycle">
+                    <div class="bin-icon">♻️</div>
+                    <span>Recycle</span>
+                    <small>Clean paper, plastic, glass, metal</small>
+                </div>
+                <div class="bin-preview" data-type="compost">
+                    <div class="bin-icon">🌱</div>
+                    <span>Compost</span>
+                    <small>Food scraps, organic materials</small>
+                </div>
+                <div class="bin-preview" data-type="trash">
+                    <div class="bin-icon">🗑️</div>
+                    <span>Trash</span>
+                    <small>Non-recyclable items</small>
+                </div>
+                <div class="bin-preview" data-type="hazardous">
+                    <div class="bin-icon">⚠️</div>
+                    <span>Hazardous</span>
+                    <small>Batteries, electronics, chemicals</small>
+                </div>
+            </div>
+            
+            <div class="lives-info">
+                <p>⚠️ You have <strong>3 lives</strong> - 3 mistakes and the game ends!</p>
+            </div>
+            
+            <button id="start-gameplay-btn" class="btn btn--primary btn--lg">🎬 Let's Start Sorting!</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen hidden">
+        <div class="game-header">
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-label">Score</span>
+                    <span id="score" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Lives</span>
+                    <span id="lives" class="stat-value">❤️❤️❤️</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Progress</span>
+                    <span id="progress" class="stat-value">0/20</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <!-- Character Helper -->
+            <div id="character-helper" class="character-helper">
+                <div class="character-avatar">🤖</div>
+                <div class="character-speech">
+                    <p id="character-message">Let's start sorting! Drag the item to the right bin.</p>
+                    <div class="character-name">Eco-E</div>
+                </div>
+            </div>
+
+            <!-- Waste Item -->
+            <div id="waste-item-container" class="waste-item-container">
+                <div id="waste-item" class="waste-item" draggable="true">
+                    <div class="item-emoji">🍼</div>
+                    <div class="item-name">Plastic Water Bottle</div>
+                </div>
+            </div>
+
+            <!-- Sorting Bins -->
+            <div class="sorting-bins">
+                <div class="bin" data-category="recycle" id="recycle-bin">
+                    <div class="bin-header">
+                        <div class="bin-icon">♻️</div>
+                        <span class="bin-name">Recycle</span>
+                    </div>
+                    <div class="bin-body"></div>
+                </div>
+                
+                <div class="bin" data-category="compost" id="compost-bin">
+                    <div class="bin-header">
+                        <div class="bin-icon">🌱</div>
+                        <span class="bin-name">Compost</span>
+                    </div>
+                    <div class="bin-body"></div>
+                </div>
+                
+                <div class="bin" data-category="trash" id="trash-bin">
+                    <div class="bin-header">
+                        <div class="bin-icon">🗑️</div>
+                        <span class="bin-name">Trash</span>
+                    </div>
+                    <div class="bin-body"></div>
+                </div>
+                
+                <div class="bin" data-category="hazardous" id="hazardous-bin">
+                    <div class="bin-header">
+                        <div class="bin-icon">⚠️</div>
+                        <span class="bin-name">Hazardous</span>
+                    </div>
+                    <div class="bin-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Modal -->
+        <div id="feedback-modal" class="modal hidden">
+            <div class="modal-content">
+                <div id="feedback-icon" class="feedback-icon">🎬</div>
+                <div id="feedback-title" class="feedback-title">That's a wrap!</div>
+                <div id="feedback-message" class="feedback-message">Great job sorting that item!</div>
+                <div id="feedback-fact" class="feedback-fact">Did you know? This fact will appear here.</div>
+                <button id="continue-btn" class="btn btn--primary">Continue 🎬</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results-screen" class="screen hidden">
+        <div class="results-header">
+            <h2>🏆 Final Results</h2>
+            <div class="film-reel-decoration">🎞️</div>
+        </div>
+        
+        <div class="results-content">
+            <div class="final-score">
+                <div class="score-circle">
+                    <span id="final-score">0</span>
+                    <small>points</small>
+                </div>
+            </div>
+            
+            <div class="results-stats">
+                <div class="result-stat">
+                    <span class="stat-icon">✅</span>
+                    <span id="correct-sorts">0</span>
+                    <small>Correct Sorts</small>
+                </div>
+                <div class="result-stat">
+                    <span class="stat-icon">❌</span>
+                    <span id="incorrect-sorts">0</span>
+                    <small>Mistakes</small>
+                </div>
+                <div class="result-stat">
+                    <span class="stat-icon">🎯</span>
+                    <span id="accuracy">0%</span>
+                    <small>Accuracy</small>
+                </div>
+            </div>
+            
+            <div class="achievements-earned">
+                <h3>🏆 Achievements Earned</h3>
+                <div id="earned-achievements" class="achievements-list">
+                    <!-- Achievements will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="environmental-impact">
+                <h3>🌍 Environmental Impact</h3>
+                <p id="impact-message">Your sorting skills help protect our planet!</p>
+            </div>
+            
+            <div class="results-actions">
+                <button id="play-again-btn" class="btn btn--primary btn--lg">🎬 Play Again</button>
+                <button id="share-score-btn" class="btn btn--secondary btn--lg">📢 Share Score</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
